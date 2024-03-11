@@ -38,7 +38,7 @@ export class AuthService {
 
     //join the hashed result and salt together
     const result = salt + '.' + hash.toString('hex');
-    delete createUserDto.password
+    delete createUserDto.password;
     createUserDto['password'] = result;
     //create new user and save it
     const user = await this.usersService.insertUser(createUserDto);
@@ -50,17 +50,16 @@ export class AuthService {
 
   async signin(loginDto: LoginDto) {
     const user = await this.usersService.findUserByEmail(loginDto.email);
-      console.log('User trying to signin >> ', user);
-      if (!user) {
-        throw new NotFoundException('User not found when searched by email!');
-      }
-      const [salt, storedHash] = user.password.split('.');
-      const hash = (await scrypt(loginDto.password, salt, 32)) as Buffer;
-
-      if (storedHash !== hash.toString('hex')) {
-        throw new BadRequestException('wrong password!');
-      }
-      return user;
+    console.log('User trying to signin >> ', user);
+    if (!user) {
+      throw new NotFoundException('User not found when searched by email!');
     }
-  }
+    const [salt, storedHash] = user.password.split('.');
+    const hash = (await scrypt(loginDto.password, salt, 32)) as Buffer;
 
+    if (storedHash !== hash.toString('hex')) {
+      throw new BadRequestException('wrong password!');
+    }
+    return user;
+  }
+}

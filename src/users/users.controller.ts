@@ -24,8 +24,8 @@ export class UsersController {
   @Post('/signup')
   async createUser(@Body() createUserDto: CreateUserDto) {
       console.log('API Body >> ', createUserDto);
-
-      await this.usersService.insertUser(createUserDto);
+      //await this.usersService.insertUser(createUserDto);
+    return this.authService.signup(createUserDto);
   }
 
   // @Post('/signup')
