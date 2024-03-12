@@ -1,13 +1,12 @@
-
 import { IsString, IsNumber } from 'class-validator';
 
 export class CreatePdtDto {
-    @IsString()
-    name: string;
+  @IsString()
+  name: string;
 
-    @IsString()
-    description: string;
+  @IsString()
+  description: string;
 
-    @IsNumber()
-    price: number;
+  @IsNumber()
+  price: number;
 }

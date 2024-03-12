@@ -14,8 +14,6 @@ import { LoginDto } from './dtos/login.dto';
 
 @Controller('auth')
 export class UsersController {
-  
-
   constructor(
     private readonly usersService: UsersService,
     private authService: AuthService,
@@ -23,8 +21,8 @@ export class UsersController {
 
   @Post('/signup')
   async createUser(@Body() createUserDto: CreateUserDto) {
-      console.log('API Body >> ', createUserDto);
-      //await this.usersService.insertUser(createUserDto);
+    console.log('API Body >> ', createUserDto);
+    //await this.usersService.insertUser(createUserDto);
     return this.authService.signup(createUserDto);
   }
 
@@ -60,7 +58,7 @@ export class UsersController {
     return this.authService.signin(loginDto);
   }
 
-  @Get('/allusers')
+  @Get('/')
   async getAllUsers() {
     const users = await this.usersService.getUsers();
     return users;

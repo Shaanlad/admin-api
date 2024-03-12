@@ -13,13 +13,12 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post()
+  @Post('/')
   async createPdt(
     @Body('name') pdtName: string,
     @Body('description') pdtDesc: string,
     @Body('price') pdtPrice: number,
   ) {
-    // console.log('API Body >> ', body);
     const generatedId = await this.productsService.insertProduct(
       pdtName,
       pdtDesc,
@@ -28,7 +27,7 @@ export class ProductsController {
     return { id: generatedId };
   }
 
-  @Get()
+  @Get('/')
   async getAllPdt() {
     const pdt = await this.productsService.getProducts();
     return pdt;
