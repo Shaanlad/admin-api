@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Delete,
+  Session,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -18,6 +19,16 @@ export class UsersController {
     private readonly usersService: UsersService,
     private authService: AuthService,
   ) {}
+
+  @Get('/colors/:color')
+  setColor(@Param('color') color: string, @Session() session: any) {
+    session.color = color;
+  }
+
+  @Get('/colors')
+  getColor(@Session() session: any) {
+    return session.color;
+  }
 
   @Post('/signup')
   async createUser(@Body() createUserDto: CreateUserDto) {
@@ -53,7 +64,7 @@ export class UsersController {
   //   );
   // }
 
-  @Post('signin')
+  @Post('/signin')
   async signin(@Body() loginDto: LoginDto) {
     return this.authService.signin(loginDto);
   }
@@ -64,12 +75,12 @@ export class UsersController {
     return users;
   }
 
-  @Get(':id')
+  @Get('/:id')
   getUser(@Param('id') userId: string) {
     return this.usersService.getSingleUser(userId);
   }
 
-  @Patch(':id')
+  @Patch('/:id')
   async updateUser(
     @Param('id') userId: string,
     @Body('firstname') userFirstName: string,
@@ -89,7 +100,7 @@ export class UsersController {
     return null;
   }
 
-  @Delete(':id')
+  @Delete('/:id')
   async removeUser(@Param('id') userId: string) {
     await this.usersService.deleteUser(userId);
     return null;

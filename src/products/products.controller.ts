@@ -33,12 +33,12 @@ export class ProductsController {
     return pdt;
   }
 
-  @Get(':id')
+  @Get('/:id')
   getPdt(@Param('id') prodId: string) {
     return this.productsService.getSingleProduct(prodId);
   }
 
-  @Patch(':id')
+  @Patch('/:id')
   async updatePdt(
     @Param('id') prodId: string,
     @Body('name') prodName: string,
@@ -54,7 +54,7 @@ export class ProductsController {
     return null;
   }
 
-  @Delete(':id')
+  @Delete('/:id')
   async removePdt(@Param('id') prodId: string) {
     await this.productsService.deleteProduct(prodId);
     return null;
