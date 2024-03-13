@@ -20,21 +20,28 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
-  @Get('/colors/:color')
-  setColor(@Param('color') color: string, @Session() session: any) {
-    session.color = color;
+  @Get('/whoami')
+  whoAmI(@Session() session: any) {
+    console.log('whoAmI session >> ', session);
+    return this.usersService.getSingleUser(session.userId);
   }
 
-  @Get('/colors')
-  getColor(@Session() session: any) {
-    return session.color;
+  @Post('/signout')
+  signout(@Session() session: any) {
+    session.userId = null;
   }
 
   @Post('/signup')
-  async createUser(@Body() createUserDto: CreateUserDto) {
+  async createUser(
+    @Body() createUserDto: CreateUserDto,
+    @Session() session: any,
+  ) {
     console.log('API Body >> ', createUserDto);
     //await this.usersService.insertUser(createUserDto);
-    return this.authService.signup(createUserDto);
+    const user = await this.authService.signup(createUserDto);
+    console.log('new user signup >>', user);
+    session.userId = user.id;
+    return user;
   }
 
   // @Post('/signup')
@@ -65,8 +72,10 @@ export class UsersController {
   // }
 
   @Post('/signin')
-  async signin(@Body() loginDto: LoginDto) {
-    return this.authService.signin(loginDto);
+  async signin(@Body() loginDto: LoginDto, @Session() session: any) {
+    const user = await this.authService.signin(loginDto);
+    session.userId = user.id;
+    return user;
   }
 
   @Get('/')

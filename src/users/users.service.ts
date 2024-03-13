@@ -17,7 +17,8 @@ export class UsersService {
     const newUser = new this.userModel(createUserDto);
     const result = await newUser.save();
     console.log('User Created >> ', result);
-    return result.id as string;
+    // return result.id as string;
+    return result;
   }
 
   async getUsers() {
@@ -34,6 +35,9 @@ export class UsersService {
   }
 
   async getSingleUser(userId: string) {
+    if (!userId) {
+      return null;
+    }
     const user = await this.findUser(userId);
     return {
       id: user.id,
