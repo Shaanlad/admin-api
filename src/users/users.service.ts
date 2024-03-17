@@ -4,6 +4,7 @@ import { User } from './user.model';
 import { Model } from 'mongoose';
 import { IsEmail } from 'class-validator';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -63,29 +64,29 @@ export class UsersService {
   //   };
   // }
 
-  async updateUser(
-    userId: string,
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string,
-    isAdmin: boolean,
-  ) {
+  async updateUser(userId: string, updateUserDto: UpdateUserDto) {
+    console.log(
+      'Inside updateUser >> ',
+      userId,
+      ' updateUserDto >> ',
+      updateUserDto,
+    );
     const updatedUser = await this.findUser(userId);
-    if (firstname) {
-      updatedUser.firstname = firstname;
+    console.log('updatedUser >> ', updatedUser);
+    if (updateUserDto.firstname) {
+      updatedUser.firstname = updateUserDto.firstname;
     }
-    if (lastname) {
-      updatedUser.lastname = lastname;
+    if (updateUserDto.lastname) {
+      updatedUser.lastname = updateUserDto.lastname;
     }
-    if (email) {
-      updatedUser.email = email;
+    if (updateUserDto.email) {
+      updatedUser.email = updateUserDto.email;
     }
-    if (password) {
-      updatedUser.password = password;
+    if (updateUserDto.password) {
+      updatedUser.password = updateUserDto.password;
     }
-    if (isAdmin) {
-      updatedUser.isAdmin = isAdmin;
+    if (updateUserDto.isAdmin) {
+      updatedUser.isAdmin = updateUserDto.isAdmin;
     }
     updatedUser.save();
   }
@@ -106,16 +107,14 @@ export class UsersService {
     return user;
   }
 
-   async findUserByEmail(email: string): Promise<User> {
+  async findUserByEmail(email: string): Promise<User> {
     const user = await this.userModel.findOne({ email: email });
     console.log('users >> ', user);
     return user;
 
-    //user enters email, password 
+    //user enters email, password
     //search via password
     //if found, allow signin
     //else flag exception
- 
   }
 }
-

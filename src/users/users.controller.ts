@@ -7,12 +7,15 @@ import {
   Patch,
   Delete,
   Session,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { AuthGuard } from 'src/guards/auth.guards';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Controller('auth')
 export class UsersController {
@@ -28,6 +31,7 @@ export class UsersController {
   // }
 
   @Get('/whoami')
+  @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: string) {
     return user;
   }
@@ -43,7 +47,6 @@ export class UsersController {
     @Session() session: any,
   ) {
     console.log('API Body >> ', createUserDto);
-    //await this.usersService.insertUser(createUserDto);
     const user = await this.authService.signup(createUserDto);
     console.log('new user signup >>', user);
     session.userId = user.id;
@@ -96,22 +99,9 @@ export class UsersController {
   }
 
   @Patch('/:id')
-  async updateUser(
-    @Param('id') userId: string,
-    @Body('firstname') userFirstName: string,
-    @Body('lastname') userLastName: string,
-    @Body('email') userEmail: string,
-    @Body('email') userPassword: string,
-    @Body('isAdmin') userIsAdmin: boolean,
-  ) {
-    await this.usersService.updateUser(
-      userId,
-      userFirstName,
-      userLastName,
-      userEmail,
-      userPassword,
-      userIsAdmin,
-    );
+  async updateUser(@Param('id') userId: string, @Body() body: UpdateUserDto) {
+    // await this.usersService.updateUser(userId, body);
+    await this.authService.updateAuthUser(userId, body);
     return null;
   }
 

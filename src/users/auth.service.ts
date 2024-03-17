@@ -8,6 +8,7 @@ import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { LoginDto } from './dtos/login.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 const scrypt = promisify(_scrypt);
 
@@ -29,13 +30,10 @@ export class AuthService {
     // });
 
     //hash users password process -
-
     //generate salt
     const salt = randomBytes(8).toString('hex');
-
     //hash the salt and password together
     const hash = (await scrypt(createUserDto.password, salt, 32)) as Buffer;
-
     //join the hashed result and salt together
     const result = salt + '.' + hash.toString('hex');
     delete createUserDto.password;
@@ -61,5 +59,36 @@ export class AuthService {
       throw new BadRequestException('wrong password!');
     }
     return user;
+  }
+
+  async updateAuthUser(userId: string, updateUserDto: UpdateUserDto) {
+    console.log('<< Inside updateAuthUser >> ');
+
+    //generate salt
+    // const salt = randomBytes(8).toString('hex');
+    // //hash the salt and password together
+    // const hash = (await scrypt(updateUserDto.password, salt, 32)) as Buffer;
+    // //join the hashed result and salt together
+    // const result = salt + '.' + hash.toString('hex');
+    updateUserDto['password'] = await this.passwordHashingMech(
+      updateUserDto.password,
+    );
+    console.log('Hashed Password >> ', updateUserDto.password);
+    //update the user and save it
+    const user = await this.usersService.updateUser(userId, updateUserDto);
+
+    //return the user
+    console.log('Auth User Updated >> ', user);
+    return user;
+  }
+
+  async passwordHashingMech(dtoPassword: string) {
+    //generate salt
+    const salt = randomBytes(8).toString('hex');
+    //hash the salt and password together
+    const hash = (await scrypt(dtoPassword, salt, 32)) as Buffer;
+    //join the hashed result and salt together
+    const result = salt + '.' + hash.toString('hex');
+    return result;
   }
 }
