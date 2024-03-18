@@ -53,33 +53,6 @@ export class UsersController {
     return user;
   }
 
-  // @Post('/signup')
-  // async createUser(
-
-  //   @Body('firstname') userFirstName: string,
-  //   @Body('lastname') userLastName: string,
-  //   @Body('email') userEmail: string,
-  //   @Body('password') userPassword: string,
-  //   @Body('isAdmin') userIsAdmin: boolean,
-  // ) {
-  //   // const generatedId = await this.usersService.insertUser(
-  //   //   userFirstName,
-  //   //   userLastName,
-  //   //   userEmail,
-  //   //   userPassword,
-  //   //   userIsAdmin,
-  //   // );
-  //   // return { id: generatedId };
-
-  //   return this.authService.signup(
-  //     userFirstName,
-  //     userLastName,
-  //     userEmail,
-  //     userPassword,
-  //     userIsAdmin,
-  //   );
-  // }
-
   @Post('/signin')
   async signin(@Body() loginDto: LoginDto, @Session() session: any) {
     const user = await this.authService.signin(loginDto);

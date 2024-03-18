@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.model';
 import { Model } from 'mongoose';
-import { IsEmail } from 'class-validator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
@@ -49,20 +48,6 @@ export class UsersService {
       isAdmin: user.isAdmin,
     };
   }
-
-  // async getSingleUserbyEmail(email: string) {
-  //   const user = await this.findUserByEmail(email);
-  //   console.log('Inside getSingleUserbyEmail >> ', user);
-
-  //   return {
-  //     id: user.id,
-  //     name: user.firstname,
-  //     lastname: user.lastname,
-  //     email: user.email,
-  //     password: user.password,
-  //     isAdmin: user.isAdmin,
-  //   };
-  // }
 
   async updateUser(userId: string, updateUserDto: UpdateUserDto) {
     console.log(
