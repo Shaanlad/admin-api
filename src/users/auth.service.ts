@@ -18,16 +18,6 @@ export class AuthService {
 
   async signup(createUserDto: CreateUserDto) {
     console.log('<< Inside signup >> ');
-    //check if email in use
-    // const users = await this.usersService.getUsers();
-    // console.log('users >> ', users);
-    // users.forEach((user) => {
-    //   console.log('user email >> ', user.email);
-    //   if (user.email === createUserDto.email) {
-    //     console.log('email matched');
-    //     throw new BadRequestException('email in use!');
-    //   }
-    // });
 
     //hash users password process -
     //generate salt
