@@ -8,8 +8,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { UpdatePdtDto } from './dtos/update-products.dto';
 
-@Controller('products')
+@Controller('product')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -39,18 +40,8 @@ export class ProductsController {
   }
 
   @Patch('/:id')
-  async updatePdt(
-    @Param('id') prodId: string,
-    @Body('name') prodName: string,
-    @Body('description') prodDesc: string,
-    @Body('price') prodprice: number,
-  ) {
-    await this.productsService.updateProduct(
-      prodId,
-      prodName,
-      prodDesc,
-      prodprice,
-    );
+  async updatePdt(@Param('id') prodId: string, @Body() body: UpdatePdtDto) {
+    await this.productsService.updateProduct(prodId, body);
     return null;
   }
 

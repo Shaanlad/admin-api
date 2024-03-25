@@ -2,10 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product } from './product.model';
 import { Model } from 'mongoose';
+import { UpdatePdtDto } from './dtos/update-products.dto';
 
 @Injectable()
 export class ProductsService {
-  private products: Product[] = []; //check again
+  private products: Product[] = [];
 
   constructor(
     @InjectModel('Product') private readonly productModel: Model<Product>,
@@ -26,7 +27,6 @@ export class ProductsService {
 
   async getProducts() {
     const products = await this.productModel.find().exec();
-    console.log('All Products >> ', products);
     return products.map((pdt) => ({
       id: pdt.id,
       name: pdt.name,
@@ -45,28 +45,23 @@ export class ProductsService {
     };
   }
 
-  async updateProduct(
-    productId: string,
-    name: string,
-    desc: string,
-    price: number,
-  ) {
+  async updateProduct(productId: string, updatePdtDto: UpdatePdtDto) {
     const updatedPdt = await this.findPdt(productId);
-    if (name) {
-      updatedPdt.name = name;
+    if (updatePdtDto.name) {
+      updatedPdt.name = updatePdtDto.name;
     }
-    if (desc) {
-      updatedPdt.description = desc;
+    if (updatePdtDto.description) {
+      updatedPdt.description = updatePdtDto.description;
     }
-    if (price) {
-      updatedPdt.price = price;
+    if (updatePdtDto.price) {
+      updatedPdt.price = updatePdtDto.price;
     }
     updatedPdt.save();
   }
 
   async deleteProduct(prodId: string) {
     const result = await this.productModel.deleteOne({ _id: prodId }).exec();
-    console.log('About to delete >> ', result.deletedCount);
+    console.log('Deleted Product >> ', result.deletedCount);
     if (result.deletedCount === 0) {
       throw new NotFoundException('Sorry, the product does not exist!');
     }
@@ -75,14 +70,10 @@ export class ProductsService {
   private async findPdt(id: string): Promise<Product> {
     const pdt = this.productModel.findById(id);
     if (!pdt) {
-      throw new NotFoundException('Sorry, unable to find your product!');
+      throw new NotFoundException(
+        "Sorry, the product you're looking for does not exist!",
+      );
     }
     return pdt;
-    // return {
-    //     id: pdt.id,
-    //   name: pdt.name,
-    //   description: pdt.description,
-    //   price: pdt.price,
-    // };
   }
 }
