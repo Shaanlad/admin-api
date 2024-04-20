@@ -46,7 +46,7 @@ export class AuthService {
     const hash = (await scrypt(loginDto.password, salt, 32)) as Buffer;
 
     if (storedHash !== hash.toString('hex')) {
-      throw new BadRequestException('wrong password!');
+      throw new BadRequestException('Incorrect password!');
     }
     return user;
   }
