@@ -102,4 +102,21 @@ export class UsersService {
     //if found, allow signin
     //else flag exception
   }
+
+  // Credit Score Block
+  generateCreditScore() {
+    // Generate credit score b/w 300 to 850
+    // Credit Score Matrix
+    // 300-579 Poor
+    // 580-669 Fair
+    // 670-739 Good
+    // 740-799 Very Good
+    // 800-850 Exceptional
+    let creditScore = 0;
+    creditScore = Math.floor(Math.random() * (850 - 300) + 300);
+    console.log('creditScore >> ', creditScore);
+    return creditScore;
+  }
+  
+
 }
