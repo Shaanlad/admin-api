@@ -21,7 +21,8 @@ export class AppService {
       success_url: 'http://localhost:3000/success',
       // +
       // '/pay/success/checkout/session?sessions_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:3030' + '/pay/failed/checkout/session',
+      // cancel_url: 'http://localhost:3030' + '/pay/failed/checkout/session',
+      cancel_url: 'http://localhost:3030/default',
     });
 
     console.log('<< Returning sessions >> ');
