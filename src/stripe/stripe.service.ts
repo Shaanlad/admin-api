@@ -18,10 +18,30 @@ export class StripeService {
       (acc, item) => acc + item.quantity * item.price,
       0,
     );
+
     return this.stripe.paymentIntents.create({
-      amount: totalPrice * 100, //cents
+      amount: +totalPrice.toFixed(2) * 100, //cents
       currency: 'usd', //currency
       payment_method_types: ['card'],
     });
+  }
+
+  stripePK() {
+    return { publishableKey: process.env.STRIPE_PUBLISHABLE_KEY };
+  }
+
+  async createPymntIntent() {
+    try {
+      const paymentIntent = await this.stripe.paymentIntents.create({
+        amount: 1000, //cents
+        currency: 'usd', //currency
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+      return { status: 201, clientSecret: paymentIntent.client_secret };
+    } catch (error) {
+      return { status: 400, message: error.message };
+    }
   }
 }
