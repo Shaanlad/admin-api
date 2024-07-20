@@ -6,6 +6,7 @@ import { ProductsModule } from './products/products.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { StripeModule } from './stripe/stripe.module';
 import { ConfigModule } from '@nestjs/config';
+import { MailchimpModule } from './mailchimp/mailchimp.module';
 
 //const adminDBPass = encodeURIComponent('Helios#Aim24*');
 
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
       'mongodb+srv://adminDBUser:Test123vSL@atlascluster.cnzcjfg.mongodb.net/allpoint-apis?retryWrites=true&w=majority&appName=AtlasCluster',
     ),
     StripeModule,
+    MailchimpModule,
   ],
   controllers: [AppController],
   providers: [AppService],
