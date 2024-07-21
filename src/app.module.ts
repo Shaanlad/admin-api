@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { StripeModule } from './stripe/stripe.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailchimpModule } from './mailchimp/mailchimp.module';
+import { EnrollModule } from './enroll/enroll.module';
 
 //const adminDBPass = encodeURIComponent('Helios#Aim24*');
 
@@ -22,6 +23,7 @@ import { MailchimpModule } from './mailchimp/mailchimp.module';
     ),
     StripeModule,
     MailchimpModule,
+    EnrollModule,
   ],
   controllers: [AppController],
   providers: [AppService],
