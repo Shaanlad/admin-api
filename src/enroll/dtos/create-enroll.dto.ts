@@ -26,10 +26,10 @@ export class CreateEnrollDto {
   phoneNumber: string;
 
   @IsString()
-  ssn: string;
+  ssn4Digits: string;
 
   @IsString()
-  email: string;
+  emailAddress: string;
 
   @IsDate()
   dateOfBirth: string;

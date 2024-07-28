@@ -21,8 +21,8 @@ export class EnrollService {
     switchSpecificDate: string,
     moveDesiredDate: string,
     phoneNumber: string,
-    ssn: string,
-    email: string,
+    ssn4Digits: string,
+    emailAddress: string,
     dateOfBirth: string,
   ) {
     const newEnroll = new this.enrollModel({
@@ -34,8 +34,8 @@ export class EnrollService {
       switchSpecificDate,
       moveDesiredDate,
       phoneNumber,
-      ssn,
-      email,
+      ssn4Digits,
+      emailAddress,
       dateOfBirth,
     });
     const result = await newEnroll.save();

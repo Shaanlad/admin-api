@@ -15,8 +15,8 @@ export class EnrollController {
     @Body('switchSpecificDate') switchSpecificDate: string,
     @Body('moveDesiredDate') moveDesiredDate: string,
     @Body('phoneNumber') phoneNumber: string,
-    @Body('ssn') ssn: string,
-    @Body('email') email: string,
+    @Body('ssn4Digits') ssn4Digits: string,
+    @Body('emailAddress') emailAddress: string,
     @Body('dateOfBirth') dateOfBirth: string,
   ) {
     const generatedId = await this.enrollService.insertEnroll(
@@ -28,8 +28,8 @@ export class EnrollController {
       switchSpecificDate,
       moveDesiredDate,
       phoneNumber,
-      ssn,
-      email,
+      ssn4Digits,
+      emailAddress,
       dateOfBirth,
     );
     return { id: generatedId };

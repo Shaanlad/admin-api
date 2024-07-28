@@ -9,8 +9,8 @@ export const EnrollSchema = new mongoose.Schema({
   switchSpecificDate: { type: String },
   moveDesiredDate: { type: String },
   phoneNumber: { type: Number },
-  ssn: { type: String },
-  email: { type: String },
+  ssnDigits: { type: String },
+  emailAddress: { type: String },
   dateOfBirth: { type: String },
 });
 
@@ -24,7 +24,7 @@ export interface Enroll extends mongoose.Document {
   switchSpecificDate: string;
   moveDesiredDate: string;
   phoneNumber: number;
-  ssn: string;
-  email: string;
+  ssn4Digits: string;
+  emailAddress: string;
   dateOfBirth: string;
 }
