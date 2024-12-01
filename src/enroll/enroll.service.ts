@@ -39,7 +39,7 @@ export class EnrollService {
       dateOfBirth,
     });
     const result = await newEnroll.save();
-    console.log('Enrollment Inserted >> ', result);
+    console.log('Enrollment Record Inserted >> ', result);
 
     return result.id as string;
   }
